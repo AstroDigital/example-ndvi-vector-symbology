@@ -1,0 +1,1 @@
+# example-ndvi-vector-symbology
