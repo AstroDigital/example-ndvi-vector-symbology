@@ -1,6 +1,6 @@
 'use strict'
 
-/* Function to symbolize each Mabox vector feature in the collection using a
+/* Function to symbolize each Leaflet vector feature in the collection using a
 predefined list of colors. */
 const setupLegend = (feature, layer) => {
   /* The NDVI values are represented on a scale of 0-1 while the legend we
@@ -24,11 +24,12 @@ const setupLegend = (feature, layer) => {
   layer.setStyle(symbology);
 };
 
-/* Function used to initialize a Mapbox map component with a polygon layer,
+/* Function used to initialize a Leaflet map component with a polygon layer,
 as described in detail in Tutorial 1 */
 const setupMap = (fieldPolys, mbAccessToken) => {
-  L.mapbox.accessToken = mbAccessToken;
-  const map = L.mapbox.map('map', 'mapbox.satellite').setView([0, 0], 0);
+  const basemapUrl = 'http://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png';
+  const map = L.map('map').setView([0, 0], 0);
+  L.tileLayer(`${basemapUrl}?access_token=${mbAccessToken}`).addTo(map);
   fieldPolys.addTo(map);
   map.fitBounds(fieldPolys.getBounds());
 }
