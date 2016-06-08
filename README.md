@@ -1,4 +1,5 @@
 # Symbolized Astro Digital NDVI Vector Map
+[Working Example](https://rawgit.com/AstroDigital/example-ndvi-vector-symbology/master/example/index.html) | [Primary Code](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js)
 ## Overview
 This tutorial describes extracting vector data from the return of Astro Digital's NDVI values API, and using it with the Leaflet Javascript framework to render a symbolized map representing NDVI intensity. It assumes a basic understanding of Leaflet mapping boilerplate as demonstrated in the [Basic Astro Digital NDVI Vector Map Setup](https://github.com/AstroDigital/example-ndvi-vector-symbology) tutorial, which describes the basics of map initialization in more detail. Other topics in this series include:
 - [Synthesizing the vector and imagery NDVI products to create masked imagery](https://github.com/AstroDigital/example-field-mask) and
