@@ -1,7 +1,7 @@
 # Symbolized Astro Digital NDVI Vector Map
 [Working Example](https://rawgit.com/AstroDigital/example-ndvi-vector-symbology/master/example/index.html) | [Primary Code](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js)
 ## Overview
-This tutorial describes extracting vector data from the return of Astro Digital's NDVI values API, and using it with the Leaflet Javascript framework to render a symbolized map representing NDVI intensity. It assumes a basic understanding of Leaflet mapping boilerplate as demonstrated in the [Basic Astro Digital NDVI Vector Map Setup](https://github.com/AstroDigital/example-ndvi-vector-symbology) tutorial, which describes the basics of map initialization in more detail. Other topics in this series include:
+This tutorial describes extracting vector data from the return of Astro Digital's NDVI values API, and using it with the Leaflet Javascript framework to render a symbolized map representing NDVI intensity. It assumes a basic understanding of Leaflet mapping boilerplate as demonstrated in the [Basic Astro Digital NDVI Vector Map Setup](https://github.com/AstroDigital/example-ndvi-vector) tutorial, which describes the basics of map initialization in more detail. Other topics in this series include:
 - [Synthesizing the vector and imagery NDVI products to create masked imagery](https://github.com/AstroDigital/example-field-mask) and
 - [Graphing the NDVI values using Chart.js, and including precipitation as a secondary datasource](https://github.com/AstroDigital/example-ndvi-chart-plus).
 
@@ -12,7 +12,7 @@ Begin by writing basic boilerplate HTML, containing a div called `#map` styled t
 There are several ways a legend could be generated, including creating a function for dynamic gradient generation or logic to assign a more limited palette of colors based on binning of the NDVI values. In this example, we will define a legend in an [external file](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbology.js), where intensity categories numbering 0 to 256 are associated with red, green, and blue values in a Javascript object. In addition to importing the NDVI values external data, we will also import the NDVI values response. The example program itself is located in the [ad-symbolized-map.js](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js) file.
 
 ### Javascript
-Begin by creating a FeatureCollection from the `results` attribute of Astro Digital's NDVI values API response, as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/index.html). This time, we will include a call to Leaflet's `onEachFeature` method in the the construction of the vector feature, which will allow us to evaluate the values of each polygon and apply a legend accordingly. Because the example data contains NDVI values for a range of dates, we will also need to pick a specific date to symbolize by referencing its index.
+Begin by creating a FeatureCollection from the `results` attribute of Astro Digital's NDVI values API response, as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector). This time, we will include a call to Leaflet's `onEachFeature` method in the the construction of the vector feature, which will allow us to evaluate the values of each polygon and apply a legend accordingly. Because the example data contains NDVI values for a range of dates, we will also need to pick a specific date to symbolize by referencing its index.
 ```js
 // Choose date index to use.
 const dateIndex = 27;
@@ -55,7 +55,7 @@ const setupLegend = (feature, layer) => {
   layer.setStyle(symbology);
 };
 ```
-With the features now appropriately symbolized, we are able to initialize the map using exactly the same boilerplate as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/index.html).
+With the features now appropriately symbolized, we are able to initialize the map using exactly the same boilerplate as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector).
 ```js
 const setupMap = (fieldPolys, mbAccessToken) => {
   const basemapUrl = 'http://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png';
