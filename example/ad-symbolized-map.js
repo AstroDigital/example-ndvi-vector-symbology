@@ -1,3 +1,4 @@
+/* global L, adNdviData, dNdviSymbology */
 'use strict'
 
 /* Function to symbolize each Leaflet vector feature in the collection using a
@@ -33,8 +34,6 @@ const setupMap = (fieldPolys, mbAccessToken) => {
   fieldPolys.addTo(map);
   map.fitBounds(fieldPolys.getBounds());
 }
-
-
 
 / !!! PROGRAM BEGINS HERE !!! /
 

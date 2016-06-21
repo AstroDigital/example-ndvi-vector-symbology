@@ -1,19 +1,17 @@
 # Symbolized Astro Digital NDVI Vector Map
-[Working Example](https://rawgit.com/AstroDigital/example-ndvi-vector-symbology/master/example/index.html) | [Primary Code](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js)
+
+### [Working Example](https://rawgit.com/AstroDigital/example-ndvi-vector-symbology/master/example/index.html) | [Primary Code](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js)
+
+[![Demonstration of this code](demo.png)](https://rawgit.com/AstroDigital/example-ndvi-vector-symbology/master/example/index.html)
 
 ## Overview
-This tutorial describes extracting vector data from the return of Astro Digital's NDVI values API, and using it with the Leaflet Javascript framework to render a symbolized map representing NDVI intensity. It assumes a basic understanding of Leaflet mapping boilerplate as demonstrated in the [Basic Astro Digital NDVI vector map setup](https://github.com/AstroDigital/example-ndvi-vector) tutorial, which describes the basics of map initialization in more detail. Other topics in this series include:
-- [Synthesizing the vector and imagery NDVI products to create masked imagery](https://github.com/AstroDigital/example-field-mask) and
+This tutorial describes extracting vector data from the return of [Astro Digital's NDVI values API](https://docs.astrodigital.com/docs/results), and using it with the Leaflet Javascript framework to render a symbolized map representing NDVI intensity. Be sure to check out the [Basic Astro Digital NDVI vector map setup](https://github.com/AstroDigital/example-ndvi-vector) tutorial, which describes the basics of map initialization in more detail. Other topics in this series include:
+- [Using the vector and imagery NDVI products to create masked imagery](https://github.com/AstroDigital/example-field-mask) and
 - [Graphing the NDVI values using Chart.js, and including precipitation as a secondary datasource](https://github.com/AstroDigital/example-ndvi-chart-plus).
 
-## Procedure
-### HTML and Legend Definition
-Begin by writing basic boilerplate HTML, containing a div called `#map` styled to fill the window, and including the Leaflet script and css support files in the header and links to the support data in the body, as shown in this [example](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/index.html).
+## Summary
 
-There are several ways a legend could be generated, including creating a function for dynamic gradient generation or logic to assign a more limited palette of colors based on binning of the NDVI values. In this example, we will define a legend in an [external file](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbology.js), where intensity categories numbering 0 to 256 are associated with red, green, and blue values in a Javascript object. In addition to importing the NDVI values external data, we will also import the NDVI values response. The example program itself is located in the [ad-symbolized-map.js](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js) file.
-
-### Javascript
-Begin by creating a FeatureCollection from the `results` attribute of Astro Digital's NDVI values API response, as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector). This time, we will include a call to Leaflet's `onEachFeature` method in the the construction of the vector feature, which will allow us to evaluate the values of each polygon and apply a legend accordingly. Because the example data contains NDVI values for a range of dates, we will also need to pick a specific date to symbolize by referencing its index.
+Begin by creating a FeatureCollection from the `results` attribute of [Astro Digital's NDVI values API response](https://docs.astrodigital.com/docs/results), as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector). This time, we will include a call to Leaflet's `onEachFeature` method in the the construction of the vector feature, which will allow us to evaluate the values of each polygon and apply a legend accordingly. Because the example data contains NDVI values for a range of dates, we will also need to pick a specific date to symbolize by referencing its index.
 ```js
 // Choose date index to use.
 const dateIndex = 27;
@@ -26,8 +24,7 @@ let fieldPolys = L.geoJson({
     return field;
   })
 }, {
-  // This function call, and the function itself, are the only areas where we
-  // diverge from the more detailed instructions in the introductory tutorial.
+  // This function is the only new item not in the introductory tutorial
   onEachFeature: setupLegend
 });
 ```
@@ -56,15 +53,11 @@ const setupLegend = (feature, layer) => {
   layer.setStyle(symbology);
 };
 ```
-With the features now appropriately symbolized, we are able to initialize the map using exactly the same boilerplate as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector).
-```js
-const setupMap = (fieldPolys, mbAccessToken) => {
-  const basemapUrl = 'http://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png';
-  const map = L.map('map').setView([0, 0], 0);
-  L.tileLayer(`${basemapUrl}?access_token=${mbAccessToken}`).addTo(map);
-  fieldPolys.addTo(map);
-  map.fitBounds(fieldPolys.getBounds());
-}
-const mbAccessToken = 'pk.eyJ1IjoiYXN0cm9kaWdpdGFsIiwiYSI6ImNVb1B0ZkEifQ.IrJoULY2VMSBNFqHLrFYew';
-setupMap(fieldPolys, mbAccessToken);
-```
+
+With the features now appropriately symbolized, we are able to initialize the map using the same code as described in the [basic tutorial](https://github.com/AstroDigital/example-ndvi-vector).
+
+Check out [the source code for more details!](example/ad-symbolized-map.js)
+
+### Legend Definition
+
+There are several ways a legend could be generated, including creating a function for dynamic gradient generation or logic to assign a more limited palette of colors based on binning of the NDVI values. In this example, we will define a legend in an [external file](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbology.js), where intensity categories numbering 0 to 256 are associated with red, green, and blue values in a Javascript object. In addition to importing the NDVI values external data, we will also import the NDVI values response. The example program itself is located in the [ad-symbolized-map.js](https://github.com/AstroDigital/example-ndvi-vector-symbology/blob/master/example/ad-symbolized-map.js) file.
